@@ -45,4 +45,4 @@ CHECKOUT_PAYMENT_CHOICES = [
 ## Notes
 1. Razorpay automatically capture the whole payment amount;
 2. In test mode, you can use `4111 1111 1111 1111` (or any other valid credit card numbers) 
-with any future expiry date and CVV to pay orders. 
+with any future expiry date and CVV to pay orders.

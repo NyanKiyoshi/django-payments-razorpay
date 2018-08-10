@@ -35,15 +35,8 @@ class ModalPaymentForm(PaymentForm):
             charge = self.provider.charge(self.transaction_id, self.payment)
             captured_amount = Decimal(charge['amount']) / 100
 
-            # FIXME: should we handle the case
-            # of having the captured amount invalid?
             self.payment.attrs.capture = json.dumps(charge)
             self.payment.captured_amount = captured_amount
-
-            assert captured_amount == self.payment.total
-
+            self.payment.transaction_id = self.transaction_id
+            self.payment.change_status(PaymentStatus.CONFIRMED)
         return data
-
-    def save(self):
-        self.payment.transaction_id = self.transaction_id
-        self.payment.change_status(PaymentStatus.CONFIRMED)

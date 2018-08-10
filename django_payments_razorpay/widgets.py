@@ -20,7 +20,8 @@ class RazorPayCheckoutWidget(HiddenInput):
             'data-image': provider.image,
             'data-name': provider.name,
             'data-description': payment.description or _('Total payment'),
-            'data-amount': int(payment.total * 100)
+            'data-amount': int(payment.total * 100),
+            'data-currency': payment.currency
         }
 
         if provider.prefill:
@@ -36,7 +37,7 @@ class RazorPayCheckoutWidget(HiddenInput):
             base_attrs.update(override_attrs)
         super(RazorPayCheckoutWidget, self).__init__(*args, **kwargs)
 
-    def render(self, name, *args, **kwargs):
+    def render(self, *args, **kwargs):
         attrs = kwargs.setdefault('attrs', {})
         attrs.update(self.attrs)
         return format_html('<script{0}></script>', flatatt(attrs))

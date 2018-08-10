@@ -11,7 +11,6 @@ import razorpay.errors
 class RazorPayProvider(BasicProvider):
 
     form_class = ModalPaymentForm
-    ACCEPTED_CURRENCIES = 'INR',
 
     def __init__(
             self,
@@ -28,8 +27,6 @@ class RazorPayProvider(BasicProvider):
         super(RazorPayProvider, self).__init__(**kwargs)
 
     def get_form(self, payment, data=None):
-        # TODO: raise error if payment.currency is not in ACCEPTED_CURRENCIES
-
         if payment.status == PaymentStatus.WAITING:
             payment.change_status(PaymentStatus.INPUT)
             
@@ -37,7 +34,6 @@ class RazorPayProvider(BasicProvider):
             data=data, payment=payment, provider=self)
 
         if form.is_valid():
-            form.save()
             raise RedirectNeeded(payment.get_success_url())
         return form
 
