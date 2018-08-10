@@ -1,11 +1,7 @@
+from django.forms.utils import flatatt
 from django.forms.widgets import HiddenInput
 from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
-
-try:
-    from django.forms.utils import flatatt
-except ImportError:
-    from django.forms.util import flatatt
 
 CHECKOUT_SCRIPT_URL = 'https://checkout.razorpay.com/v1/checkout.js'
 
