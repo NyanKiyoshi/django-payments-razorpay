@@ -10,8 +10,6 @@ except ImportError:
 CHECKOUT_SCRIPT_URL = 'https://checkout.razorpay.com/v1/checkout.js'
 
 
-# TODO: add note to docs: you can use any valid card number
-# like 4111 1111 1111 1111 with any future expiry date and CVV in the test mode
 class RazorPayCheckoutWidget(HiddenInput):
     def __init__(self, provider, payment, *args, **kwargs):
         override_attrs = kwargs.get('attrs', None)

@@ -23,7 +23,6 @@ class ModalPaymentForm(PaymentForm):
             widget=widget, required=False)
         self.transaction_id = None
 
-    # TODO: add note to the docs saying there is no fraud status
     def clean(self):
         data = super(ModalPaymentForm, self).clean()
 

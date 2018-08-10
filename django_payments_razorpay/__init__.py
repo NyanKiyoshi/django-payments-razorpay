@@ -18,7 +18,6 @@ class RazorPayProvider(BasicProvider):
             public_key, secret_key,
             image='', name='', prefill=False, **kwargs):
 
-        # TODO: warn on docs: paisa is the only support currency as of now
         self.secret_key = secret_key
         self.public_key = public_key
         self.image = image
