@@ -1,5 +1,10 @@
 # Razorpay for django-payments
 
+[![PyPi Release](https://img.shields.io/pypi/v/django-payments-razorpay.svg)](https://pypi.org/project/django-payments-razorpay/)
+![python](https://img.shields.io/pypi/pyversions/django-payments-razorpay.svg)
+[![Build Status](https://travis-ci.org/NyanKiyoshi/django-payment-razorpay.svg?branch=master)](https://travis-ci.org/NyanKiyoshi/django-payment-razorpay)
+[![codecov](https://codecov.io/gh/NyanKiyoshi/django-payment-razorpay/branch/master/graph/badge.svg)](https://codecov.io/gh/NyanKiyoshi/django-payment-razorpay)
+
 **WARNING:** only the paisa (INR) currency is supported by Razorpay as of now.
 
 ## Installation

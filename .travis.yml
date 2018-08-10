@@ -37,6 +37,10 @@ matrix:
       env: DJANGO="2.0"
     - python: "3.6"
       env: DJANGO="master"
+    - python: "3.7"
+      env: DJANGO="master"
+      sudo: required
+      dist: xenial
 after_success: codecov
 install: pip install tox-travis codecov
 script: tox
