@@ -3,10 +3,9 @@ from decimal import Decimal
 import mock
 import pytest
 import razorpay.errors
+from django_payments_razorpay import RazorPayProvider
 from payments import PaymentStatus, RedirectNeeded
 from payments.core import provider_factory
-
-from django_payments_razorpay import RazorPayProvider
 from tests.conftest import CLIENT_ID, SECRET, TOTAL, TRANSACTION_ID
 
 

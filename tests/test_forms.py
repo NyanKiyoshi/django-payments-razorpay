@@ -1,8 +1,7 @@
 import pytest
-from payments import PaymentStatus
-
 from django_payments_razorpay import ModalPaymentForm
-from tests.conftest import TRANSACTION_ID, TOTAL_INT, TOTAL
+from payments import PaymentStatus
+from tests.conftest import TOTAL, TOTAL_INT, TRANSACTION_ID
 
 
 def test_modal_payment_form_valid_data(

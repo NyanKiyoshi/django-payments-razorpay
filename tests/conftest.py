@@ -1,10 +1,10 @@
 from decimal import Decimal
 
-import pytest
 import mock
+import pytest
+from django_payments_razorpay import RazorPayProvider
 from payments import PaymentStatus
 from payments.models import BasePayment
-from django_payments_razorpay import RazorPayProvider
 
 TRANSACTION_ID = 'pay_7IZD7aJ2kkmOjk'
 
