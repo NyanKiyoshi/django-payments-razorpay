@@ -6,8 +6,7 @@ python:
   - "3.6"
 env:
   - DJANGO="1.11"
-  - DJANGO="2.0"
-  - DJANGO="2.1"
+  - DJANGO="2.2"
   - DJANGO="master"
 matrix:
   include:
@@ -16,35 +15,31 @@ matrix:
     - python: "3.7"
       sudo: required
       dist: xenial
-      env: DJANGO="2.0"
-    - python: "3.7"
-      sudo: required
-      dist: xenial
-      env: DJANGO="2.1"
+      env: DJANGO="2.2"
     - python: "3.7"
       sudo: required
       dist: xenial
       env: DJANGO="master"
   allow_failures:
     - python: "3.5"
-      env: DJANGO="2.1"
+      env: DJANGO="2.2"
     - python: "3.5"
       env: DJANGO="master"
     - python: "3.6"
-      env: DJANGO="2.1"
+      env: DJANGO="2.2"
     - python: "3.6"
       env: DJANGO="master"
     - python: "3.7"
       sudo: required
       dist: xenial
-      env: DJANGO="2.1"
+      env: DJANGO="2.2"
     - python: "3.7"
       env: DJANGO="master"
       sudo: required
       dist: xenial
   exclude:
     - python: "3.4"
-      env: DJANGO="2.1"
+      env: DJANGO="2.2"
     - python: "3.4"
       env: DJANGO="master"
 after_success: codecov

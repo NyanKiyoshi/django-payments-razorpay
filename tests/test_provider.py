@@ -28,16 +28,20 @@ def test_get_form(mocked_razor_checkout, provider, payment):
 
 
 def test_get_form_invalid_data(provider, payment):
-    with pytest.raises(KeyError, message='razorpay_payment_id'):
+    with pytest.raises(KeyError) as exc:
         provider.get_form(payment, data={})
+
+    assert exc.value.args == ('razorpay_payment_id',)
 
     assert payment.captured_amount == 0
     assert payment.transaction_id is None
 
 
 def test_get_form_valid_data(valid_payment_form_data, provider, payment):
-    with pytest.raises(RedirectNeeded, message='https://success'):
+    with pytest.raises(RedirectNeeded) as exc:
         provider.get_form(payment, data=valid_payment_form_data)
+
+    assert exc.value.args[0] == payment.get_success_url()
 
     assert payment.save.call_count != 0
     assert payment.status == PaymentStatus.CONFIRMED
@@ -84,7 +88,8 @@ def test_refund_invalid_data(provider, payment):
     payment.captured_amount = payment.total
     provider.razorpay_client.payment.refund.side_effect = _raise_fake_error
 
-    with pytest.raises(ValueError, message='hello world'):
+    with pytest.raises(ValueError) as exc:
         provider.refund(payment, Decimal(2220))
 
+    assert str(exc.value.args) == str(('hello world',))
     assert payment.captured_amount == payment.total

@@ -25,11 +25,11 @@ def test_modal_payment_form_already_processed(
     provider.razorpay_client.payment.capture.assert_not_called()
 
 
-def test_modal_payment_form_invalid_data(
-        provider, payment, valid_payment_form_data):
+def test_modal_payment_form_invalid_data(provider, payment):
     form = ModalPaymentForm(
         provider=provider, payment=payment, data={})
 
-    with pytest.raises(KeyError, message='razorpay_payment_id'):
+    with pytest.raises(KeyError) as exc:
         form.is_valid()
+    assert exc.value.args == ('razorpay_payment_id',)
     provider.razorpay_client.payment.capture.assert_not_called()
