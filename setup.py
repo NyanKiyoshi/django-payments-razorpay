@@ -22,7 +22,7 @@ setup(
     description='Razorpay provider for django-payments.',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    version='0.1.2',
+    version='1.0',
     packages=['django_payments_razorpay'],
     include_package_data=True,
     classifiers=[
