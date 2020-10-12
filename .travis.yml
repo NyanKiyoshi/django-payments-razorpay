@@ -1,27 +1,5 @@
 dist: xenial
 language: python
 python:
-  - "3.8"
-env:
-  - DJANGO_PAYMENTS="0.12"   DJANGO="2.2"
-  - DJANGO_PAYMENTS="0.12"   DJANGO="3.0"
-  - DJANGO_PAYMENTS="0.12"   DJANGO="3.1"
-  - DJANGO_PAYMENTS="0.12"   DJANGO="master"
-  - DJANGO_PAYMENTS="master" DJANGO="2.2"
-  - DJANGO_PAYMENTS="master" DJANGO="3.0"
-  - DJANGO_PAYMENTS="master" DJANGO="3.1"
-  - DJANGO_PAYMENTS="master" DJANGO="master"
-matrix:
-  include:
-    - python: "3.9"
-      env: DJANGO="master" DJANGO_PAYMENTS="master"
-  allow_failures:
-    - python: "3.8"
-      env: DJANGO_PAYMENTS="0.12"   DJANGO="master"
-    - python: "3.8"
-      env: DJANGO_PAYMENTS="master" DJANGO="master"
-    - python: "3.9"
-      env: DJANGO_PAYMENTS="master" DJANGO="master"
-after_success: codecov
-install: pip install tox-travis codecov
-script: tox
+  - "3.9-dev"
+script: python -V
