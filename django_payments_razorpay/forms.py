@@ -2,7 +2,7 @@ import json
 from decimal import Decimal
 
 from django import forms
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext_lazy as _
 from payments import PaymentStatus
 from payments.forms import PaymentForm
 

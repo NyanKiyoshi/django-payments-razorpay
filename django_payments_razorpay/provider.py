@@ -3,19 +3,24 @@ from decimal import Decimal
 
 from payments import PaymentStatus, RedirectNeeded
 from payments.core import BasicProvider
-from .forms import ModalPaymentForm
+
 import razorpay
 import razorpay.errors
 
+from .forms import ModalPaymentForm
+
 
 class RazorPayProvider(BasicProvider):
-
     form_class = ModalPaymentForm
 
     def __init__(
             self,
-            public_key, secret_key,
-            image='', name='', prefill=False, **kwargs):
+            public_key: str,
+            secret_key: str,
+            image: str = '',
+            name: str = '',
+            prefill: bool = False,
+            **kwargs):
 
         self.secret_key = secret_key
         self.public_key = public_key
@@ -29,7 +34,7 @@ class RazorPayProvider(BasicProvider):
     def get_form(self, payment, data=None):
         if payment.status == PaymentStatus.WAITING:
             payment.change_status(PaymentStatus.INPUT)
-            
+
         form = self.form_class(
             data=data, payment=payment, provider=self)
 
