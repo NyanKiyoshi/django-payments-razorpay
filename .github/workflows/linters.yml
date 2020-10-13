@@ -1,10 +1,10 @@
-name: Pytest
+name: Check Linting
 
 on:
   push:
   pull_request:
   schedule:
-    - cron: "0 8 * * *"
+    - cron: "0 8 * * *"  # everyday at 8am UTC
 
 jobs:
   lint:

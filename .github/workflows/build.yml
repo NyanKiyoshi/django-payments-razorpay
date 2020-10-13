@@ -1,0 +1,50 @@
+name: Build and Test
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "0 8 * * *"  # everyday at 8am UTC
+
+env:
+  JUNIT_TEST_RESULTS_PREFIX: /tmp/junit-test-results-
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        py: [ "3.8", "3.9" ]
+        dj: [ "2.2", "3.0", "3.1", "master" ]
+        dp: [ "0.12", "master" ]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # Set the Python version
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.py }}
+
+      # Install pip and tox
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install tox
+
+      # Run the tests
+      - name: Run test suite
+        run: "tox -e py${{ matrix.py }}-django${{ matrix.dj }}-django_payments${{ matrix.dp }}"
+        env:
+          PYTEST_ADDOPTS: "--doctest-modules --junitxml=junit/test-results-${{ matrix.py }}.xml --cov=com --cov-report=xml --cov-report=html"
+
+      - uses: codecov/codecov-action@v1
+
+      - name: Upload pytest test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: pytest-results-${{ matrix.py }}
+          path: junit/test-results-${{ matrix.py}}.xml
+        # Use always() to always run this step to publish test results when there are test failures
+        if: ${{ always() }}
