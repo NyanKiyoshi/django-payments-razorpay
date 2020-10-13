@@ -4,9 +4,10 @@ from django_payments_razorpay.widgets import RazorPayCheckoutWidget
 def test_checkout_widget_attrs_overriding(provider, payment):
     base_attrs = RazorPayCheckoutWidget(provider, payment).attrs
     overridden_attrs = RazorPayCheckoutWidget(
-        provider, payment, attrs={'data-currency': 'INR'}).attrs
+        provider, payment, attrs={"data-currency": "INR"}
+    ).attrs
 
-    base_attrs['data-currency'] = 'INR'
+    base_attrs["data-currency"] = "INR"
     assert base_attrs == overridden_attrs
 
 
@@ -19,7 +20,8 @@ def test_checkout_widget_render_without_prefill(provider, payment):
         'data-description="payment" '
         'data-image="" '
         'data-key="abc123" data-name="" '
-        'src="https://checkout.razorpay.com/v1/checkout.js"></script>')
+        'src="https://checkout.razorpay.com/v1/checkout.js"></script>'
+    )
 
 
 def test_checkout_widget_render_with_prefill(provider, payment):
@@ -34,4 +36,5 @@ def test_checkout_widget_render_with_prefill(provider, payment):
         'data-key="abc123" data-name="" '
         'data-prefill.email="hello@example.com" '
         'data-prefill.name="Doe John" '
-        'src="https://checkout.razorpay.com/v1/checkout.js"></script>')
+        'src="https://checkout.razorpay.com/v1/checkout.js"></script>'
+    )

@@ -1,35 +1,38 @@
 import pytest
-from django_payments_razorpay import ModalPaymentForm
 from payments import PaymentStatus
+
+from django_payments_razorpay import ModalPaymentForm
 from tests.conftest import TOTAL, TOTAL_INT, TRANSACTION_ID
 
 
-def test_modal_payment_form_valid_data(
-        provider, payment, valid_payment_form_data):
+def test_modal_payment_form_valid_data(provider, payment, valid_payment_form_data):
     form = ModalPaymentForm(
-        provider=provider, payment=payment, data=valid_payment_form_data)
+        provider=provider, payment=payment, data=valid_payment_form_data
+    )
     assert form.is_valid()
     provider.razorpay_client.payment.capture.assert_called_once_with(
-        TRANSACTION_ID, TOTAL_INT)
+        TRANSACTION_ID, TOTAL_INT
+    )
     assert payment.captured_amount == TOTAL
     assert payment.transaction_id == TRANSACTION_ID
     assert payment.status == PaymentStatus.CONFIRMED
 
 
 def test_modal_payment_form_already_processed(
-        provider, payment, valid_payment_form_data):
+    provider, payment, valid_payment_form_data
+):
     payment.transaction_id = TRANSACTION_ID
     form = ModalPaymentForm(
-        provider=provider, payment=payment, data=valid_payment_form_data)
+        provider=provider, payment=payment, data=valid_payment_form_data
+    )
     assert not form.is_valid()
     provider.razorpay_client.payment.capture.assert_not_called()
 
 
 def test_modal_payment_form_invalid_data(provider, payment):
-    form = ModalPaymentForm(
-        provider=provider, payment=payment, data={})
+    form = ModalPaymentForm(provider=provider, payment=payment, data={})
 
     with pytest.raises(KeyError) as exc:
         form.is_valid()
-    assert exc.value.args == ('razorpay_payment_id',)
+    assert exc.value.args == ("razorpay_payment_id",)
     provider.razorpay_client.payment.capture.assert_not_called()

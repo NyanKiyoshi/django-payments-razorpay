@@ -1,11 +1,10 @@
 import json
 from decimal import Decimal
 
-from payments import PaymentStatus, RedirectNeeded
-from payments.core import BasicProvider
-
 import razorpay
 import razorpay.errors
+from payments import PaymentStatus, RedirectNeeded
+from payments.core import BasicProvider
 
 from .forms import ModalPaymentForm
 
@@ -14,13 +13,14 @@ class RazorPayProvider(BasicProvider):
     form_class = ModalPaymentForm
 
     def __init__(
-            self,
-            public_key: str,
-            secret_key: str,
-            image: str = '',
-            name: str = '',
-            prefill: bool = False,
-            **kwargs):
+        self,
+        public_key: str,
+        secret_key: str,
+        image: str = "",
+        name: str = "",
+        prefill: bool = False,
+        **kwargs
+    ):
 
         self.secret_key = secret_key
         self.public_key = public_key
@@ -35,8 +35,7 @@ class RazorPayProvider(BasicProvider):
         if payment.status == PaymentStatus.WAITING:
             payment.change_status(PaymentStatus.INPUT)
 
-        form = self.form_class(
-            data=data, payment=payment, provider=self)
+        form = self.form_class(data=data, payment=payment, provider=self)
 
         if form.is_valid():
             raise RedirectNeeded(payment.get_success_url())
@@ -50,10 +49,9 @@ class RazorPayProvider(BasicProvider):
     def refund(self, payment, amount=None):
         amount = int((amount or payment.captured_amount) * 100)
         try:
-            refund = self.razorpay_client.payment.refund(
-                payment.transaction_id, amount)
+            refund = self.razorpay_client.payment.refund(payment.transaction_id, amount)
         except razorpay.errors.BadRequestError as exc:
             raise ValueError(str(exc))
-        refunded_amount = Decimal(refund['amount']) / 100
+        refunded_amount = Decimal(refund["amount"]) / 100
         payment.attrs.refund = json.dumps(refund)
         return refunded_amount
